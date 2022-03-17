@@ -1,12 +1,12 @@
-const gameConstructor = require('./game')
-const game = new gameConstructor()
+const gameConstructor = require("./game");
+const game = new gameConstructor();
 
-game.move('rock', 'paper')
-game.move('scissors', 'scissors')
-game.move('paper', 'scissors')
-game.move('paper', 'rock')
+game.move("rock", "paper");
+game.move("scissors", "scissors");
+game.move("paper", "scissors");
+game.move("paper", "rock");
 
-const storedGame = JSON.stringify(game)
-const loadedGame = JSON.parse(storedGame)
+const storedGame = game.save();
+game.load(storedGame);
 
-loadedGame.move('paper', 'scissors')
+game.move("paper", "scissors");
