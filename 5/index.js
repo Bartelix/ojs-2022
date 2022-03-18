@@ -1,38 +1,19 @@
-function fetchData(params, onSuccess, onError) {
-    const req = new XMLHttpRequest();
-    req.open(params.method, params.url, true);
-    req.onreadystatechange = function (aEvt) {
-        if (req.readyState === 4) {
-            if(req.status === 200) {
-                onSuccess(JSON.parse(req.responseText))
-            } else {
-                onError()
-            }
-        }
-    };
-    req.send(null);
+async function fetchProfile(userId) {
+  const response = await fetch(`http://localhost:8080/app/profile/${userId}`);
+  return response.json();
 }
 
-function fetchProfile(userId, onSuccess, onError) {
-    fetchData({ method: 'GET', url: `http://localhost:8080/app/profile/${userId}`}, onSuccess, onError)
+async function fetchPaymentDetails(userId) {
+  const response = await fetch(`http://localhost:8080/app/payments/${userId}`);
+  return response.json();
 }
 
-function fetchPaymentDetails(userId, onSuccess, onError) {
-    fetchData({ method: 'GET', url: `http://localhost:8080/app/payments/${userId}`}, onSuccess, onError)
-}
+(async () => {
+  const userId = 4;
+  const [userProfile, payments] = await Promise.all([fetchProfile(userId), fetchPaymentDetails(userId)]).catch(() => {
+    window.alert("Cannot fetch profile or payment details!");
+  });
 
-var userProfile = null
-var userId = 4
-
-fetchProfile(userId, (profile) => {
-    userProfile = profile
-}, () => {
-    window.alert('Cannot fetch profile!')
-})
-
-fetchPaymentDetails(userId, (payments) => {
-    document.querySelector('#user-name').textContent = `User: ${userProfile.firstName} ${userProfile.lastName}`
-    document.querySelector('#user-subscription').textContent = `Subscription: ${payments.subscriptionStatus}`
-}, () => {
-    window.alert('Cannot fetch payment details!')
-})
+  document.querySelector("#user-name").textContent = `User: ${userProfile.firstName} ${userProfile.lastName}`;
+  document.querySelector("#user-subscription").textContent = `Subscription: ${payments.subscriptionStatus}`;
+})();
