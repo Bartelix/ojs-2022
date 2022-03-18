@@ -1,1 +1,5 @@
-const firstName="John",lastName="Doe";function yourName(){return`${firstName} ${lastName}`}
+const firstName = "John",
+  lastName = "Doe";
+function yourName() {
+  return `${firstName} ${lastName}`;
+}

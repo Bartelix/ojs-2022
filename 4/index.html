@@ -1,11 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Modern SPA</title>
-</head>
-<body>
-
+  </head>
+  <body>
+    <script>
+      const propertiesOfArray = Object.getOwnPropertyNames(Array.prototype);
+      propertiesOfArray.forEach((property) => {
+        if (property !== "constructor" && property !== "length") {
+          const method = Array.prototype[property];
+          Object.defineProperty(Array.prototype, property, {
+            get: () => {
+              return method;
+            },
+            set: (value) => {
+              console.trace(`Override of Array.prototype.${property} is not allowed`);
+            },
+          });
+        }
+      });
+    </script>
+    <script>
+      const propertiesOfObject = Object.getOwnPropertyNames(Object);
+      console.log(propertiesOfObject);
+      propertiesOfObject.forEach((property) => {
+        if (property !== "constructor" && property !== "length" && property !== "prototype") {
+          const method = Object[property];
+          Object.defineProperty(Object, property, {
+            get: () => {
+              return method;
+            },
+            set: (value) => {
+              console.trace(`Override of Object.${property} is not allowed`);
+            },
+          });
+        }
+      });
+    </script>
     <script src="./lib/lib-1.js"></script>
     <script src="./lib/lib-2.js"></script>
     <script src="./lib/lib-3.js"></script>
@@ -18,20 +50,20 @@
     <script src="./lib/lib-10.js"></script>
 
     <script>
-        const names = ['Adam', 'Marek', 'Basia', 'Kasia', 'Janek', 'Tomek']
+      const names = ["Adam", "Marek", "Basia", "Kasia", "Janek", "Tomek"];
 
-        names.forEach(name => {
-            console.log(name)
-            // WTF?!
-        })
+      names.forEach((name) => {
+        console.log(name);
+        // WTF?!
+      });
 
-        const state = {
-            level: 1,
-            maxDiff: 'easy',
-            mapName: 'de-dust'
-        }
+      const state = {
+        level: 1,
+        maxDiff: "easy",
+        mapName: "de-dust",
+      };
 
-        console.log(Object.values(state).length) // WTF?!
+      console.log(Object.values(state).length); // WTF?!
     </script>
-</body>
+  </body>
 </html>

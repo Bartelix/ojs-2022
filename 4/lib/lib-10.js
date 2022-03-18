@@ -1,1 +1,1 @@
-const isTrue = false
+const isTrue = false;

@@ -1,1 +1,1 @@
-const URL="https://przeprogramowani.pl";
+const URL = "https://przeprogramowani.pl";
